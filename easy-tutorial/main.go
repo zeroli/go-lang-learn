@@ -40,6 +40,11 @@ func main() {
   fmt.Println("x = ", x)
   fmt.Printf("it's over %d\n", power)
 
+  LearnStruct();
+  LearnArray();
+}
+
+func LearnStruct() {
   {
     goku := Saiyan{
       Name: "Goku",
@@ -90,6 +95,25 @@ func main() {
       Power: 100,
     }
     fmt.Println(goku)
+  }
+}
+
+func LearnArray() {
+  {
+    var scores [10]int
+    scores[0] = 1
+    scores[1] = 2
+    fmt.Println(scores)
+  }
+  {
+    // 1,2,3,4,5 => compile error, out of bound
+    // 1,2,3 => padding 0
+    scores := [4]int{1, 2, 3, }
+    fmt.Println(scores)
+    fmt.Println("array.length=", len(scores))
+    for index, value := range scores {
+      fmt.Printf("scores[%d]=%d\n", index, value)
+    }
   }
 }
 
