@@ -46,6 +46,7 @@ func main() {
   LearnArray()
   LearnSlice()
   LearnMap()
+  LearnInterface()
 }
 
 func LearnStruct() {
@@ -190,6 +191,28 @@ func LearnMap() {
     for k, v := range(lookup) {
       fmt.Println(k, v)
     }
+  }
+}
+
+type Logger interface {
+  Log(message string)
+}
+
+type ConsoleLogger struct {
+}
+
+func (logger ConsoleLogger) Log(message string) {
+  fmt.Println(message)
+}
+
+func logMessage(logger Logger, message string) {
+  logger.Log(message)
+}
+
+func LearnInterface() {
+  {
+    logger := &ConsoleLogger{}
+    logMessage(logger, "hello interface to log message")
   }
 }
 
