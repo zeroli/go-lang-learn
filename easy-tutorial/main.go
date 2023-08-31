@@ -2,7 +2,7 @@ package main
 
 import (
   "fmt"
-  "os"
+  //"os"
 )
 
 func log(message string) {
@@ -18,6 +18,11 @@ func power(name string) (int, bool) {
   return 1, false
 }
 
+type Saiyan struct {
+  Name string
+  Power int
+}
+
 func main() {
   power := 9000
   // compiler error
@@ -25,7 +30,35 @@ func main() {
   x, power := 1, 8000  // ok, since x is new
   fmt.Println("x = ", x)
   fmt.Printf("it's over %d\n", power)
-  if len(os.Args) != 2 {
-    os.Exit(1);
+
+  {
+    goku := Saiyan{
+      Name: "Goku",
+      Power: 9000,
+    }
+    fmt.Println(goku)
+    Super1(goku)
+    fmt.Println(goku)  // {Goku, 9000}
   }
+  {
+    goku := Saiyan{}
+    goku.Name = "Goku"
+    goku.Power = 900
+    fmt.Println(goku)
+    Super2(&goku)
+    fmt.Println(goku)  // {Goku, 1000}
+  }
+  {
+    goku := Saiyan{Name: "Goku"}
+    goku.Power = 100
+    fmt.Println(goku)
+  }
+}
+
+func Super1(s Saiyan) {
+  s.Power += 100
+}
+
+func Super2(s *Saiyan) {
+  s.Power += 100
 }
