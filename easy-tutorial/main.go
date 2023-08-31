@@ -18,6 +18,15 @@ func power(name string) (int, bool) {
   return 1, false
 }
 
+type Person struct {
+  Name string
+}
+
+type Saiyan1 struct {
+  *Person
+  Power int
+}
+
 type Saiyan struct {
   Name string
   Power int
@@ -55,6 +64,33 @@ func main() {
     (&goku).Super();
     fmt.Println(goku)  // {Goku, 300}
   }
+  {
+    goku := NewSaiyan1("Goku", 100)
+    fmt.Println(goku)  // &{Goku, 100}, which is a pointer
+  }
+  {
+    goku := NewSaiyan2("Goku", 200)
+    fmt.Println(goku)  // {Goku, 200}
+  }
+  {
+    goku := new(Saiyan)
+    // need manual assignment
+    fmt.Println(goku)
+  }
+  {
+    goku := &Saiyan{
+      Name: "Goku",
+      Power: 900,
+    }
+    fmt.Println(goku)
+  }
+  {
+    goku := &Saiyan1{
+      Person: &Person{"Goku"},
+      Power: 100,
+    }
+    fmt.Println(goku)
+  }
 }
 
 func Super1(s Saiyan) {
@@ -67,4 +103,18 @@ func Super2(s *Saiyan) {
 
 func (s *Saiyan) Super() {
   s.Power += 200
+}
+
+func NewSaiyan1(name string, power int) *Saiyan {
+  return &Saiyan{
+    Name: name,
+    Power: power,
+  }
+}
+
+func NewSaiyan2(name string, power int) Saiyan {
+  return Saiyan{
+    Name: name,
+    Power: power,
+  }
 }
