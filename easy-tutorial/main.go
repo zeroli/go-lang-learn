@@ -3,6 +3,8 @@ package main
 import (
   "fmt"
   //"os"
+  "math/rand"
+  "sort"
 )
 
 func log(message string) {
@@ -42,6 +44,7 @@ func main() {
 
   LearnStruct();
   LearnArray();
+  LearnSlice();
 }
 
 func LearnStruct() {
@@ -114,6 +117,40 @@ func LearnArray() {
     for index, value := range scores {
       fmt.Printf("scores[%d]=%d\n", index, value)
     }
+  }
+}
+
+func LearnSlice() {
+  {
+    scores := []int{1, 2, 3}
+    fmt.Println("make slice with literals")
+    for index, value := range scores {
+      fmt.Printf("scores[%d]=%d\n", index, value)
+    }
+  }
+  {
+    scores := make([]int, 0)
+    scores = append(scores, 3)
+    fmt.Println("make slice:")
+    for index, value := range scores {
+      fmt.Printf("scores[%d]=%d\n", index, value)
+    }
+  }
+  {
+    scores := make([]int, 100)
+    for i := 0; i < 100; i++ {
+      scores[i] = int(rand.Int31n(1000))
+    }
+    sort.Ints(scores)
+
+    fmt.Println(scores)
+    worst := make([]int, 5)
+    // only copy the first 2 elements to worst[2:4]
+    copy(worst[2:4], scores[:5])
+    fmt.Println(worst)
+    // copying, once one (src/dst) ends, stop copying
+    copy(worst, scores[:1])
+    fmt.Println(worst)
   }
 }
 
