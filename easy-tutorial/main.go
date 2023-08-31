@@ -5,6 +5,8 @@ import (
   //"os"
   "math/rand"
   "sort"
+  "errors"
+  "io"
 )
 
 func log(message string) {
@@ -47,6 +49,7 @@ func main() {
   LearnSlice()
   LearnMap()
   LearnInterface()
+  LearnError()
 }
 
 func LearnStruct() {
@@ -213,6 +216,28 @@ func LearnInterface() {
   {
     logger := &ConsoleLogger{}
     logMessage(logger, "hello interface to log message")
+  }
+}
+
+func processError(count int) error {
+  if count > 1 {
+    return errors.New("Invalid input")
+  } else {
+    return nil
+  }
+}
+
+func LearnError() {
+  {
+    var input int
+    _, e := fmt.Scan(&input)
+    if e == io.EOF {
+      fmt.Println("no more input")
+    }
+  }
+  {
+    i := 10
+    processError(i)
   }
 }
 
