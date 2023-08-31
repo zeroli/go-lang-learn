@@ -42,9 +42,10 @@ func main() {
   fmt.Println("x = ", x)
   fmt.Printf("it's over %d\n", power)
 
-  LearnStruct();
-  LearnArray();
-  LearnSlice();
+  LearnStruct()
+  LearnArray()
+  LearnSlice()
+  LearnMap()
 }
 
 func LearnStruct() {
@@ -118,6 +119,12 @@ func LearnArray() {
       fmt.Printf("scores[%d]=%d\n", index, value)
     }
   }
+  {
+    scores := []int{1, 2, 3}
+    fmt.Println(scores)
+    ModifyArray(scores)
+    fmt.Println(scores) // modified in place
+  }
 }
 
 func LearnSlice() {
@@ -152,6 +159,43 @@ func LearnSlice() {
     copy(worst, scores[:1])
     fmt.Println(worst)
   }
+
+}
+
+func LearnMap() {
+  {
+    lookup := make(map[string]int)
+    lookup["goku"] = 9000
+    power, exists := lookup["vegeta"]
+
+    fmt.Println(power, exists)
+    fmt.Println("size of map:", len(lookup))
+    delete(lookup, "goku")
+    delete(lookup, "xxx")
+    fmt.Println("size of map:", len(lookup))
+  }
+  {
+    lookup := map[string]int {
+      "goku" : 9000,
+      "xxx" : 1,
+    }
+    fmt.Println(lookup)
+  }
+  {
+    lookup := map[string]int {
+      "a" : 10,
+      "b" : 20,
+      "c" : 30,
+    }
+    for k, v := range(lookup) {
+      fmt.Println(k, v)
+    }
+  }
+}
+
+// passing array as a reference
+func ModifyArray(a []int) {
+  a[0] = 10
 }
 
 func Super1(s Saiyan) {
