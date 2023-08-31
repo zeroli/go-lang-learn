@@ -52,6 +52,8 @@ func main() {
     goku := Saiyan{Name: "Goku"}
     goku.Power = 100
     fmt.Println(goku)
+    (&goku).Super();
+    fmt.Println(goku)  // {Goku, 300}
   }
 }
 
@@ -61,4 +63,8 @@ func Super1(s Saiyan) {
 
 func Super2(s *Saiyan) {
   s.Power += 100
+}
+
+func (s *Saiyan) Super() {
+  s.Power += 200
 }
