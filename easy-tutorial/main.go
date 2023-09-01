@@ -252,6 +252,11 @@ func LearnFuncType() {
     res := addF(3, 4)
     fmt.Println(res)  // 7
   }
+  {
+    func () {
+      fmt.Println("hello lambda")
+    }()
+  }
 }
 
 // passing array as a reference
