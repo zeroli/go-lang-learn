@@ -50,6 +50,7 @@ func main() {
   LearnMap()
   LearnInterface()
   LearnError()
+  LearnFuncType()
 }
 
 func LearnStruct() {
@@ -228,7 +229,7 @@ func processError(count int) error {
 }
 
 func LearnError() {
-  {
+  if (0 != 0) {
     var input int
     _, e := fmt.Scan(&input)
     if e == io.EOF {
@@ -238,6 +239,18 @@ func LearnError() {
   {
     i := 10
     processError(i)
+  }
+}
+
+type Add func (a int, b int) int
+
+func LearnFuncType() {
+  {
+    var addF Add = func (a int, b int) int {
+      return a + b
+    }
+    res := addF(3, 4)
+    fmt.Println(res)  // 7
   }
 }
 
