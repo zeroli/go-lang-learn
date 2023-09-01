@@ -54,6 +54,7 @@ func main() {
   LearnError()
   LearnFuncType()
   LearnConcurrency()
+  LearnChannel()
 }
 
 func LearnStruct() {
@@ -276,6 +277,52 @@ func LearnConcurrency() {
     }()
   }
   time.Sleep(time.Millisecond * 10)
+}
+
+type Worker struct {
+  id int
+}
+func (w Worker) process(c chan int) {
+  for {
+    data := <- c
+    fmt.Printf("worker %d got %d\n", w.id, data)
+    time.Sleep(time.Millisecond * 100)
+  }
+}
+
+func LearnChannel() {
+  {
+    c := make(chan int, 100)  // channel capacity 100
+    for i := 0; i < 5; i++ {
+      worker := &Worker{id: i}
+      go worker.process(c)
+    }
+    /**
+    第一个可用的通道被选择。
+    如果多个通道可用，随机选择一个。
+    如果没有通道可用，default 情况将被执行。
+    如果没有 default，select 将会阻塞。
+    */
+    for {
+      // select, with default provided,
+      // if no channel is available, run 'default' clause
+      // otherwise, choose one
+      select {
+      case c <- rand.Int():  // if full, blocking, without `select`
+      case <- time.After(time.Millisecond * 10000):
+        fmt.Println("timed out")
+      // if no channel ok, and without `default`,
+      // then no channel chosen, code blocking
+      // otherwise, `default` clause is triggered, and continue
+        /*
+      default:
+        fmt.Println("dropped")
+        */
+      }
+      fmt.Println(len(c))
+      //time.Sleep(time.Millisecond * 10)
+    }
+  }
 }
 
 // passing array as a reference
